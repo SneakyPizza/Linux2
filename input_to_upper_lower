@@ -1,0 +1,21 @@
+#!/usr/bin/env bash  
+
+# Version:      1.0
+# Created by:   Yornie Westink / 613441
+# Email:        613441@student.inholland.nl
+#
+# Script:       Input to upper and lower
+# Description:  Reads the user input indefinite and prints it uppercase and lowercase
+# Variables:    INPUT = Input of the user
+
+# Loop indefinitely    
+while :; do
+  # Accept user input, assign to the variable INPUT.                  
+  read -p "Translate input: " INPUT
+
+  # Use shell parameter expansion to translate the variable to lowercase                    
+  echo ${INPUT,,}
+
+  # Use shell parameter expansion to translate the variable to uppercase                    
+  echo ${INPUT^^}
+done

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+#
+# Version:      1.0
+# Created by:   Yornie Westink / 613441
+# Email:        613441@student.inholland.nl
+#
+# Script:       secure_copy 
+# Description:  Read user input and connect with the provided credentials to a server to transfer files.
+# Variables:    USERNAME = SSH username
+#               HOST = Hostname of the server
+#               SOURCEPATH = Source location of the file/directory
+#               TARGETPATH = Target location of the file/directory
+
+
+
+read -p "Input username: " USERNAME
+read -p "Input hostname: " HOST     #HOSTNAME is already in use
+read -p "Source path: " SOURCEPATH
+read -p "Target path: " TARGETPATH
+
+# Check if input string has 0 length and output error
+[[ -z "$USERNAME" ]] && { echo "Username does not exist"; exit 1; }
+[[ -z "$HOST" ]] && { echo "Host name does not exist"; exit 1; }
+[[ -z "$SOURCEPATH" ]] && { echo "Sourcepath does not exist"; exit 1; }
+[[ -z "$TARGETPATH" ]] && { echo "Targetpath does not exist"; exit 1; }
+
+
+# Check the command of the script 
+case $1 in 
+    remote-to-local)
+        scp $USERNAME@$HOST:$SOURCEPATH $TARGETPATH
+    ;;
+    local-to-remote)
+        scp $SOURCEPATH $USERNAME@$HOST:$TARGETPATH
+    ;;
+    *)
+        echo "Unknow operation: ($1)"
+        echo "Use: ./secure_copy [remote-to-local | local-to-remote]"
+    ;;
+esac
+

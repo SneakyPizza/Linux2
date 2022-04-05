@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+#
+# Version:      1.0
+# Created by:   Yornie Westink / 613441
+# Email:        613441@student.inholland.nl
+#
+# Script:       Backup to tar script
+# Description:  Input a directory and compress it to a tarball(archive)
+# Variables:    DIRECTORY   = User input containing a absolute path
+#               NAME        = Name of the directory
+#               SIGNATURE   = Current time (unix timestamp)
+#               ARCHIVE     = Combination of NAME + SIGNATURE
+#               $?          = Exitcode of the last command executed
+
+# Accept the directory that should be compressed.
+read -p "What directory should be compressed? (The path must be absolute) " DIRECTORY
+
+# When the provided path isn't a directory, error and exit
+if [[ ! -d $DIRECTORY ]]; then
+  echo "The directory ($DIRECTORY) did not exist, make sure the path is absolute."
+  exit 1
+fi
+
+# Use the name of the directory as the name for the compressed archive
+NAME=$(basename $DIRECTORY)
+
+# Create a unique signature to use for the compressed archive
+SIGNATURE=$(date +%s)
+
+# Compose the name of the archive by appending the aforementioned basename to
+# the unique signature
+ARCHIVE=$NAME.$SIGNATURE.tar
+
+# Compress the archive to the current directory.
+# Send all errros to /dev/null due to a warning related to using the absolute path
+tar -czf $ARCHIVE $DIRECTORY 2> /dev/null
+
+# Checks the exitcode of last command and if this is not equal to 0
+if (($? != 0)); then
+  echo "Tar was unable to create an archive."
+  exit 1
+fi
+
+# Give the archive executable permissions
+chmod u+x $ARCHIVE
+echo "Compressed to: " $ARCHIVE
