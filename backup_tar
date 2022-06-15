@@ -33,7 +33,7 @@ SIGNATURE=$(date +%s)
 ARCHIVE=$NAME.$SIGNATURE.tar
 
 # Compress the archive to the current directory.
-# Send all errros to /dev/null due to a warning related to using the absolute path
+# Send all errros to /dev/null due to a warning2> /dev/null related to using the absolute path
 tar -czf $ARCHIVE $DIRECTORY 2> /dev/null
 
 # Checks the exitcode of last command and if this is not equal to 0
