@@ -20,7 +20,7 @@ NAME="Backup"
 ARCHIVE=$NAME.$SIGNATURE
 
 # Making a tar and sending warnings to void
-tar -czf $ARCHIVE.tar /tmp/a 2> /dev/null
+tar -czf $ARCHIVE.tar $1 2> /dev/null
 
 # Check if the last exitcode isnt 0
 if (($? != 0)); then
